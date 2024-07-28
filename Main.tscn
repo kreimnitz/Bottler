@@ -1,6 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://b66br3hn708st"]
+[gd_scene load_steps=6 format=3 uid="uid://b66br3hn708st"]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_pw68t"]
+[ext_resource type="PackedScene" uid="uid://dvw7qehvxpepe" path="res://BeltView.tscn" id="2_nas1y"]
+[ext_resource type="Texture2D" uid="uid://dxtt4ow30ofr5" path="res://Images/old-wagon.png" id="3_m42ay"]
+[ext_resource type="PackedScene" uid="uid://b0yakdgf7kahq" path="res://EnemyView.tscn" id="4_nsu31"]
+[ext_resource type="Script" path="res://EnemyView.cs" id="5_mtirk"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Main" type="Node2D"]
 script = ExtResource("1_pw68t")
+
+[node name="BeltView" parent="." instance=ExtResource("2_nas1y")]
+position = Vector2(395, 443)
+
+[node name="Old-wagon" type="Sprite2D" parent="."]
+position = Vector2(215, 247)
+texture = ExtResource("3_m42ay")
+
+[node name="Enemy" parent="." instance=ExtResource("4_nsu31")]
+position = Vector2(921, 192)
+script = ExtResource("5_mtirk")

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0yakdgf7kahq"]
+
+[ext_resource type="PackedScene" uid="uid://cou05ynxesweb" path="res://HealthBar.tscn" id="1_sxrnl"]
+[ext_resource type="Texture2D" uid="uid://cqa1y8mmthphu" path="res://Images/slime.png" id="2_m5xbk"]
+
+[node name="EnemyView" type="Node2D"]
+
+[node name="HealthBar" parent="." instance=ExtResource("1_sxrnl")]
+offset_left = 4.0
+offset_right = 124.0
+
+[node name="Button" type="TextureButton" parent="."]
+offset_top = 24.0
+offset_right = 128.0
+offset_bottom = 152.0
+texture_normal = ExtResource("2_m5xbk")

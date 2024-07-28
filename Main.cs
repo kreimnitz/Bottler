@@ -3,14 +3,37 @@ using System;
 
 public partial class Main : Node2D
 {
+	private Player _player = new();
+	private Enemy _enemy = new();
+	private BeltView _beltView;
+	private EnemyView _enemyView;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		_player.BottleBelt.RefreshSlots();
+		_beltView = GetNode<BeltView>("BeltView");
+		_beltView.SetModel(_player.BottleBelt);
+
+		_enemyView = GetNode<EnemyView>("Enemy");
+		_enemyView.SetModel(_enemy);
+		_enemyView.Button.Pressed += () => OnEnemyClicked(_enemyView);
+
+		_player.BottleBelt.RefreshSlots();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+	}
+
+	private void OnEnemyClicked(EnemyView enemyView)
+	{
+		if (_beltView.Selection != null)
+		{
+			var bottle = _beltView.Selection.Model.UseBottle();
+			enemyView.Model.CurrentHp -= bottle.Power;
+		}
 	}
 }
 

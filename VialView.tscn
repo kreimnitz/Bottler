@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=3 uid="uid://kgyyk02bb32j"]
+
+[ext_resource type="Texture2D" uid="uid://dj8ig6xewdvcs" path="res://Images/vial.png" id="1_2wcae"]
+[ext_resource type="Script" path="res://VialView.cs" id="1_k1r5o"]
+
+[sub_resource type="Gradient" id="Gradient_8e1w6"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bn8mu"]
+gradient = SubResource("Gradient_8e1w6")
+width = 128
+height = 32
+
+[sub_resource type="Gradient" id="Gradient_s07ia"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_un2ak"]
+gradient = SubResource("Gradient_s07ia")
+width = 8
+height = 128
+
+[node name="VialView" type="Node2D"]
+script = ExtResource("1_k1r5o")
+
+[node name="TextBackground" type="Sprite2D" parent="."]
+position = Vector2(0, 128)
+texture = SubResource("GradientTexture2D_bn8mu")
+centered = false
+
+[node name="TextureButton" type="TextureButton" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+tooltip_text = "<Description here>"
+texture_normal = ExtResource("1_2wcae")
+
+[node name="Label" type="Label" parent="."]
+offset_top = 132.0
+offset_right = 128.0
+offset_bottom = 155.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "<Vial Name>"
+horizontal_alignment = 1
+
+[node name="Highlight" type="Node2D" parent="."]
+visible = false
+
+[node name="Left" type="Sprite2D" parent="Highlight"]
+texture = SubResource("GradientTexture2D_un2ak")
+centered = false
+
+[node name="Right" type="Sprite2D" parent="Highlight"]
+position = Vector2(120, 0)
+texture = SubResource("GradientTexture2D_un2ak")
+centered = false
+flip_h = true
+
+[node name="Bottom" type="Sprite2D" parent="Highlight"]
+position = Vector2(0, 128)
+rotation = -1.5708
+texture = SubResource("GradientTexture2D_un2ak")
+centered = false
+
+[node name="Top" type="Sprite2D" parent="Highlight"]
+position = Vector2(128, 0)
+rotation = 1.5708
+texture = SubResource("GradientTexture2D_un2ak")
+centered = false
