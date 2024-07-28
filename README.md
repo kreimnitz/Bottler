@@ -1,3 +1,5 @@
+```
+
 MAP STUFF
 Locations
 	Battle, Basic, Elite Boss
@@ -45,7 +47,9 @@ Essence Types:
 	Luck
 	Summoning
 
+
 Harvest Example:
 	Damage x 20
 	Armor x 5
 	Charging Bull (Gives some buff) x 2
+```
