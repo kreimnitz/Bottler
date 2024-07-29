@@ -1,29 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dvw7qehvxpepe"]
+[gd_scene load_steps=2 format=3 uid="uid://dvw7qehvxpepe"]
 
-[ext_resource type="PackedScene" uid="uid://kgyyk02bb32j" path="res://VialView.tscn" id="1_mjupd"]
 [ext_resource type="Script" path="res://BeltView.cs" id="1_t20ls"]
-
-[sub_resource type="Gradient" id="Gradient_e17fr"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0.160784, 0.160784, 0.160784, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_iawq5"]
-gradient = SubResource("Gradient_e17fr")
-width = 432
-height = 176
 
 [node name="BeltView" type="Node2D"]
 script = ExtResource("1_t20ls")
-
-[node name="Background" type="Sprite2D" parent="."]
-texture = SubResource("GradientTexture2D_iawq5")
-centered = false
-
-[node name="VialSlot1" parent="." instance=ExtResource("1_mjupd")]
-position = Vector2(8, 8)
-
-[node name="VialSlot2" parent="." instance=ExtResource("1_mjupd")]
-position = Vector2(152, 8)
-
-[node name="VialSlot3" parent="." instance=ExtResource("1_mjupd")]
-position = Vector2(296, 8)

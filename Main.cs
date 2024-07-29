@@ -7,11 +7,22 @@ public partial class Main : Node2D
 	private Enemy _enemy = new();
 	private BeltView _beltView;
 	private EnemyView _enemyView;
+	private PlayerView _playerView;
+	private Label _throwsLabel;
+	private Button _endTurnButton;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		_throwsLabel = GetNode<Label>("ThrowsLabel");
+		_endTurnButton = GetNode<Button>("EndTurnButton");
+		_endTurnButton.Pressed += EndTurn;
+
 		_player.BottleBelt.RefreshSlots();
+		_playerView = GetNode<PlayerView>("PlayerView");
+		_playerView.SetModel(_player);
+		_playerView.Button.Pressed += OnPlayerClicked;
+
 		_beltView = GetNode<BeltView>("BeltView");
 		_beltView.SetModel(_player.BottleBelt);
 
@@ -25,14 +36,47 @@ public partial class Main : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		_throwsLabel.Text = $"Throws Remaining: {_player.CurrentEnergy}/{_player.MaxEnergy}";
+	}
+
+	private void EndTurn()
+	{
+		_player.TakeDamage(2);
+		_player.BottleBelt.RefreshSlots();
+		_player.CurrentEnergy = _player.MaxEnergy;
 	}
 
 	private void OnEnemyClicked(EnemyView enemyView)
 	{
-		if (_beltView.Selection != null)
+		if (_beltView.Selection.Model.Bottle != null && _player.CurrentEnergy > 0)
 		{
+			_player.CurrentEnergy--;
 			var bottle = _beltView.Selection.Model.UseBottle();
-			enemyView.Model.CurrentHp -= bottle.Power;
+			ApplyBottle(enemyView.Model, bottle);
+			_beltView.ClearSelection();
+		}
+	}
+
+	private void OnPlayerClicked()
+	{
+		if (_beltView.Selection.Model.Bottle != null && _player.CurrentEnergy > 0)
+		{
+			_player.CurrentEnergy--;
+			var bottle = _beltView.Selection.Model.UseBottle();
+			ApplyBottle(_player, bottle);
+			_beltView.ClearSelection();
+		}
+	}
+
+	private void ApplyBottle(HealthBarOwner target, Bottle bottle)
+	{
+		if (bottle.PotionType == PotionType.Damage)
+		{
+			target.CurrentHp -= bottle.Power;
+		}
+		if (bottle.PotionType == PotionType.Shield)
+		{
+			target.CurrentShield += bottle.Power;
 		}
 	}
 }

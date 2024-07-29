@@ -2,43 +2,48 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Player
+public class Player : HealthBarOwner
 {
     public int Luck { get; set; } = 1;
     public BottleBelt BottleBelt { get; set; }
-    public int CurrentHp { get; set; } = 10;
-    public int MaxHp { get; set; } = 10;
-    public int CurrentEnergy { get; set; } = 2;
-    public int MaxEnergy { get; set; } = 2;
+    public int CurrentEnergy { get; set; } = 3;
+    public int MaxEnergy { get; set; } = 3;
 
     public Player()
     {
-        BottleBelt = new();
+        BottleBelt = new(this);
+        MaxHp = 20;
+        CurrentHp = 20;
     }
 }
 
 public class BottleBelt
 {
+    private const int StartingSlotCount = 5;
     private static Random _rng = new Random();
-    public List<BeltSlot> Slots { get; set; }
     private Queue<Bottle> _bottleDeck = new();
     private  List<Bottle> _bottleDiscard = new();
-    public BottleBelt()
+
+    public List<BeltSlot> Slots { get; set; } = new();
+    public Player Player { get; }
+    public BottleBelt(Player player)
     {
-        Slots = new()
+        Player = player;
+        for (int i = 0; i < StartingSlotCount; i++)
         {
-            new(this),
-            new(this),
-            new(this)
-        };
+            Slots.Add(new BeltSlot(this));
+        }
 
         _bottleDiscard.Add(new Bottle(BottleType.Endless, PotionType.Damage, 1));
         _bottleDiscard.Add(new Bottle(BottleType.Endless, PotionType.Damage, 1));
-        _bottleDiscard.Add(new Bottle(BottleType.Endless, PotionType.Damage, 1));
+        _bottleDiscard.Add(new Bottle(BottleType.Endless, PotionType.Shield, 1));
 
-        _bottleDiscard.Add(new Bottle(BottleType.Endless, PotionType.Defence, 1));
-        _bottleDiscard.Add(new Bottle(BottleType.Endless, PotionType.Defence, 1));
-        _bottleDiscard.Add(new Bottle(BottleType.Endless, PotionType.Defence, 1));
+        _bottleDiscard.Add(new Bottle(BottleType.Basic, PotionType.Damage, 2));
+        _bottleDiscard.Add(new Bottle(BottleType.Basic, PotionType.Damage, 2));
+        _bottleDiscard.Add(new Bottle(BottleType.Basic, PotionType.Damage, 2));
+        _bottleDiscard.Add(new Bottle(BottleType.Basic, PotionType.Shield, 2));
+        _bottleDiscard.Add(new Bottle(BottleType.Basic, PotionType.Shield, 2));
+        _bottleDiscard.Add(new Bottle(BottleType.Basic, PotionType.Shield, 2));
         ShuffleDiscardUnderDeck();
     }
 
@@ -104,7 +109,6 @@ public class BeltSlot
 
 public class Bottle
 {
-    public string Label => PotionType == PotionType.Damage ? "Damage" : "Shield";
     public BottleType BottleType { get; set; }
     public PotionType PotionType { get; set; }
     public int Power { get; set; }
@@ -131,7 +135,7 @@ public enum BottleType
 public enum PotionType
 {
     Damage,
-    Defence,
+    Shield,
     Healing,
     Energy,
     ExtraVials,

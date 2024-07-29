@@ -3,6 +3,7 @@ using System;
 
 public partial class VialView : Node2D
 {
+	public const int Width = 128;
 	private Label _label;
 	public Node2D Highlight;
 	public TextureButton Button;
@@ -24,10 +25,13 @@ public partial class VialView : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if (Model == null)
+		if (Model?.Bottle == null)
 		{
 			_label.Text = "Empty";
 		}
-		_label.Text = Model.Bottle.Label;
+		else
+		{
+			_label.Text = $"{Model.Bottle.PotionType} ({Model.Bottle.Power})";
+		}
 	}
 }

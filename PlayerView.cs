@@ -1,13 +1,13 @@
-using System;
 using Godot;
+using System;
 
-public partial class EnemyView : Node2D
+public partial class PlayerView : Node2D
 {
 	private HealthBar _healthBar;
 	public TextureButton Button { get; set; }
 
-	public Enemy Model { get; private set; }
-	public void SetModel(Enemy model)
+	public Player Model { get; private set; }
+	public void SetModel(Player model)
 	{
 		Model = model;
 		_healthBar.SetModel(model);

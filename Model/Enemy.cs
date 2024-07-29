@@ -1,5 +1,8 @@
-public class Enemy
+public class Enemy : HealthBarOwner
 {
-    public int CurrentHp { get; set; } = 10;
-    public int MaxHp { get; set; } = 10;
+    public Enemy()
+    {
+        CurrentHp = 10;
+        MaxHp = 10;
+    }
 }
